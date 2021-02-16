@@ -1,88 +1,9 @@
 
 
-float map[][];
-int biomeMap[][];
-boolean waterMap[][];
-int heightMap[][];
-
-int speed = 70;
-
-int xPos = 0;
-int yPos = 0;
-
-enum Map {heightMap, waterMap, biomeMap};
-Map shownMap = Map.heightMap;
-
-float fluctuation = 0;
-
-// generation parameters
-
-float scale =               0.005f;
-
-float ABYSS_THRESHOLD =     0.6f;
-float OCEAN_THRESHOLD =     1.1f;
-float SHORE_THRESHOLD =     0.05f;
-float PLAINS_THRESHOLD =    0.4f;
-float HILLS_THRESHOLD =     0.6f;
-float MOUNTAINS_THRESHOLD = 1.1f;
-
-float MAX_FLUCTUATION =     0f;
-
-int WATER_THRESHOLD =       130;
-
-int MAX_HEIGHT =            255;
-
-
-
-String biomes[] = new String[]
-{
-  "Abyss",
-  "Ocean",
-  "Shore",
-  "Plains",
-  "Hills",
-  "Mountains"
-};
-
-
-color waterMapColors[] = new color[]
-{
-  #1014DE, // blue
-  #0AC621  // green
-};
-
-color biomeColors[] = new color[]
-{
-  #110155, // dark blue
-  #1014DE, // blue
-  #DADE10, // yellow
-  #0AC621, // green
-  #00520A, // dark green
-  #3E2302  // brown
-};
-
-
-
-
 
 void draw()
 {
-  drawMap();
-}
-
-
-void setup()
-{
-  size(500, 500);
-  map = new float[width][height];
-  biomeMap = new int[width][height];
-  waterMap = new boolean[width][height];
-  heightMap = new int[width][height];
-  
-  noSmooth();
-  frameRate(5);
-  
-  generateWorld();
+  drawMap(); //<>//
 }
 
 
@@ -154,6 +75,10 @@ void drawMap()
         case biomeMap:
           col = biomeColors[biomeMap[x][y]];
           break;
+          
+        case temperatureMap:
+          col = temperatureColor(temperatureMap[x][y]);
+          break;
          
         default:
           col = 0;
@@ -181,6 +106,7 @@ void generateHeight()
       int h = round(map(value, 0f, 1f, 0, MAX_HEIGHT));
       heightMap[x][y] = h;
       
+      temperatureMap[x][y] = calculateTemperature(h);
       
       waterMap[x][y] = h > WATER_THRESHOLD;
       
@@ -188,4 +114,19 @@ void generateHeight()
     }
   }
   
+}
+
+
+
+// + acqua + temperatura
+void calculateHumidity()
+{
+  
+}
+
+
+// quadratic (height)
+float calculateTemperature(int h)
+{
+  return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;
 }

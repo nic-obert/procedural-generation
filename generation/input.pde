@@ -25,6 +25,13 @@ void keyPressed()
      break;
    case 'b':
      shownMap = Map.biomeMap;
+     break;
+   case 't':
+     shownMap = Map.temperatureMap;
+     break;
+   case 'o':
+     shownMap = Map.humidityMap;
+     break;
      
    default:
      return;
@@ -52,6 +59,13 @@ void mouseClicked()
         case biomeMap:
           println("Biome: " + biomes[biomeMap[mouseX][mouseY]]);
           break;
+        case temperatureMap:
+          println("Temperature: " + temperatureMap[mouseX][mouseY]);
+          break;
+        case humidityMap:
+          println("Humidity: " + humidityMap[mouseX][mouseY]);
+          break;
+          
       }
    
  }
