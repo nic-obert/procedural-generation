@@ -25,5 +25,7 @@ void setup()
   humidityMap = new float[width][height];
   temperatureMap = new float[width][height];
   
+  initBiomes();
+  
   generateWorld();
 }

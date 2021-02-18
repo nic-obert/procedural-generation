@@ -10,6 +10,7 @@ void draw()
 void generateWorld()
 {
   generateHeight();
+  generateHumidity();
   divideBiomes();
 }
 
@@ -79,6 +80,10 @@ void drawMap()
         case temperatureMap:
           col = temperatureColor(temperatureMap[x][y]);
           break;
+        
+        case humidityMap:
+          col = humidityColor(humidityMap[x][y]);
+          break;
          
         default:
           col = 0;
@@ -91,6 +96,17 @@ void drawMap()
 }
 
 
+void generateHumidity()
+{
+  for (int x = 0; x != width; x++)
+  {
+    for (int y = 0; y != height; y++)
+    {
+      float humidityNoise = noise((x + xPos) * scale, (y + yPos) * scale);
+      humidityMap[x][y] = humidityNoise + temperatureMap[x][y] * HUMIDITY_TEMPERATURE;
+    }
+  }
+}
 
 
 void generateHeight()
@@ -109,7 +125,7 @@ void generateHeight()
       temperatureMap[x][y] = calculateTemperature(h);
       
       waterMap[x][y] = h > WATER_THRESHOLD;
-      
+            
       //fluctuation += random(-MAX_FLUCTUATION, MAX_FLUCTUATION);      
     }
   }
@@ -117,15 +133,6 @@ void generateHeight()
 }
 
 
-
-// + acqua + temperatura
-void calculateHumidity()
-{
-  
-}
-
-
-// quadratic (height)
 float calculateTemperature(int h)
 {
   return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;

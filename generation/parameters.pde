@@ -31,6 +31,8 @@ float TEMPERATURE_INCREMENT =   0.3f;
 int MAX_TEMPERATURE_HEIGHT   =  140;
 int DEFAULT_TEMPERATURE =       20;
 
+float HUMIDITY_TEMPERATURE =    1.3f;
+float HUMIDITY_HEIGHT =         0.2f;
 
 // end  of gneration parameters
 
@@ -71,4 +73,12 @@ color temperatureColor(float temperature)
                     DEFAULT_TEMPERATURE - max(MAX_HEIGHT - MAX_TEMPERATURE_HEIGHT, MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT,
                     DEFAULT_TEMPERATURE, 
                     0, 255));
+}
+
+
+color humidityColor(float humidity)
+{
+  return round(map(humidity,
+                    0, MAX_HEIGHT * HUMIDITY_HEIGHT + DEFAULT_TEMPERATURE * HUMIDITY_TEMPERATURE,
+                    #0000ff, #000000));
 }
