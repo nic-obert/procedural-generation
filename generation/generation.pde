@@ -178,30 +178,7 @@ final void generateHeight()
 
 final float calculateTemperature(int x, int y, int h)
 {
-  float tempNoise = noise(x * TEMPERATURE_OFFSET * scale, y * TEMPERATURE_OFFSET * scale) * 100 - 50;
-  
-  int xMod = x % 1000;
-  int yMod = y % 1000;
-  if (xMod > 500 || yMod > 500)
-  {
-    if (xMod > 250)
-      xMod = 500 - xMod;
-    if (yMod > 250)
-      yMod = 500 - yMod;
-    tempNoise += 0.02 * (xMod + yMod);
-  }
-  else
-  {
-    xMod -= 500;
-    yMod -= 500;
-    
-    if (xMod > 250)
-      xMod = 500 - xMod;
-    if (yMod > 250)
-      yMod = 500 - yMod;
-      
-    tempNoise -= 0.02 * (xMod + yMod);
-  }
+  float tempNoise = noise(x * TEMPERATURE_FLUCTUATION, y * TEMPERATURE_FLUCTUATION) * 100 - 50;
     
   return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT + tempNoise;
   
