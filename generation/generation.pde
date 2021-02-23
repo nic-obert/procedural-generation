@@ -1,59 +1,102 @@
 
 
 
-void draw()
+final void draw()
 {
   drawMap(); //<>//
 }
 
 
-void generateWorld()
+final void generateWorld()
 {
   generateHeight();
   generateHumidity();
+  divideBaseBiomes();
   divideBiomes();
 }
 
 
-void divideBiomes()
+final void divideBiomes()
 {
-   for (int x = 0; x != width; x++)
+  for (int x = 0; x != width; x++)
+  {
+    for (int y = 0; y != height; y++)
+    {
+      
+      color col;
+      
+      switch (baseBiomeMap[x][y])
+      {
+        case Abyss:
+          col = abyssMap(x, y);
+          break;
+        case Ocean:
+          col = abyssMap(x, y);
+          break;
+        case Shore:
+          col = abyssMap(x, y);
+          break;
+        case Plains:
+          col = abyssMap(x, y);
+          break;
+        case Hills:
+          col = abyssMap(x, y);
+          break;
+        case Mountains:
+          col = abyssMap(x, y);
+          break;
+        default:
+          col = 0;
+          break;
+      }
+      
+      map[x][y] = col;
+            
+    }
+  }
+  
+}
+
+
+final void divideBaseBiomes()
+{
+  for (int x = 0; x != width; x++)
   {
     for (int y = 0; y != height; y++)
     {
       float value = noise((x + xPos) * scale, (y + yPos) * scale);
-      int biome = 0;
+      BaseBiome biome = BaseBiome.Abyss; // not an actual initialization
       
       if (!waterMap[x][y])
       {
         value = map(value, 0f, ((float)WATER_THRESHOLD / MAX_HEIGHT), 0f, 1f);
         
         if (value < ABYSS_THRESHOLD)
-          biome = 0; // abyss
+          biome = BaseBiome.Abyss;
         else if (value < OCEAN_THRESHOLD)
-          biome = 1; // ocean
+          biome = BaseBiome.Ocean;
       }
       else
       {   
         value = map(value, ((float)WATER_THRESHOLD / MAX_HEIGHT), 1f, 0f, 1f);
         
         if (value < SHORE_THRESHOLD) 
-          biome = 2; // shore
+          biome = BaseBiome.Shore;
         else if (value < PLAINS_THRESHOLD)
-          biome = 3; // plains
+          biome = BaseBiome.Plains;
         else if (value < HILLS_THRESHOLD)
-          biome = 4; // hills
+          biome = BaseBiome.Hills;
         else if (value < MOUNTAINS_THRESHOLD)
-          biome = 5; // mountains
+          biome = BaseBiome.Mountains;
       }
       
-      biomeMap[x][y] = biome ;
+      baseBiomeMap[x][y] = biome ;
     }
   }
 }
 
 
-void drawMap() 
+final void drawMap() 
 {
   for (int x = 0; x != width; x++)
   {
@@ -74,7 +117,7 @@ void drawMap()
           break;
           
         case biomeMap:
-          col = biomeColors[biomeMap[x][y]];
+          col = baseBiomeColor(baseBiomeMap[x][y]);
           break;
           
         case temperatureMap:
@@ -96,7 +139,7 @@ void drawMap()
 }
 
 
-void generateHumidity()
+final void generateHumidity()
 {
   for (int x = 0; x != width; x++)
   {
@@ -109,7 +152,7 @@ void generateHumidity()
 }
 
 
-void generateHeight()
+final void generateHeight()
 {
   for (int x = 0; x != width; x++)
   {
@@ -122,18 +165,44 @@ void generateHeight()
       int h = round(map(value, 0f, 1f, 0, MAX_HEIGHT));
       heightMap[x][y] = h;
       
-      temperatureMap[x][y] = calculateTemperature(h);
+      temperatureMap[x][y] = calculateTemperature(x + xPos, y + yPos, h);
       
       waterMap[x][y] = h > WATER_THRESHOLD;
             
-      //fluctuation += random(-MAX_FLUCTUATION, MAX_FLUCTUATION);      
     }
   }
   
 }
 
 
-float calculateTemperature(int h)
+
+final float calculateTemperature(int x, int y, int h)
 {
-  return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;
+  float tempNoise = noise(x * TEMPERATURE_OFFSET * scale, y * TEMPERATURE_OFFSET * scale) * 100 - 50;
+  
+  int xMod = x % 1000;
+  int yMod = y % 1000;
+  if (xMod > 500 || yMod > 500)
+  {
+    if (xMod > 250)
+      xMod = 500 - xMod;
+    if (yMod > 250)
+      yMod = 500 - yMod;
+    tempNoise += 0.02 * (xMod + yMod);
+  }
+  else
+  {
+    xMod -= 500;
+    yMod -= 500;
+    
+    if (xMod > 250)
+      xMod = 500 - xMod;
+    if (yMod > 250)
+      yMod = 500 - yMod;
+      
+    tempNoise -= 0.02 * (xMod + yMod);
+  }
+    
+  return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT + tempNoise;
+  
 }

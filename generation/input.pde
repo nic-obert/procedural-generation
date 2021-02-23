@@ -1,7 +1,7 @@
 
 
 
-void keyPressed()
+final void keyPressed()
 {
  switch (key)
  {
@@ -32,6 +32,9 @@ void keyPressed()
    case 'o':
      shownMap = Map.humidityMap;
      break;
+   case 'm':
+     shownMap = Map.finalMap;
+     break;
      
    default:
      return;
@@ -41,7 +44,7 @@ void keyPressed()
 }
 
 
-void mouseClicked()
+final void mouseClicked()
 {
  if (mouseButton == LEFT)
  {
@@ -57,7 +60,7 @@ void mouseClicked()
           println("Height: " + heightMap[mouseX][mouseY]);
           break;
         case biomeMap:
-          println("Biome: " + biomes[biomeMap[mouseX][mouseY]]);
+          println("Biome: " + baseBiomeMap[mouseX][mouseY]);
           break;
         case temperatureMap:
           println("Temperature: " + temperatureMap[mouseX][mouseY]);
@@ -66,13 +69,15 @@ void mouseClicked()
           println("Humidity: " + humidityMap[mouseX][mouseY]);
           break;
           
+        default:
+          return;
       }
    
  }
 }
 
 
-void mouseWheel(MouseEvent event) 
+final void mouseWheel(MouseEvent event) 
 {
   float value = event.getCount();
  
@@ -94,7 +99,7 @@ void mouseWheel(MouseEvent event)
             MAX_FLUCTUATION = 0;
           println("Max fluctuation: " + MAX_FLUCTUATION);
           break;
-        case 'm':
+        case 'l':
           WATER_THRESHOLD += round(value);
           println("Water threshold: " + WATER_THRESHOLD);
           break;

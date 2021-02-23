@@ -1,13 +1,13 @@
 
-float map[][];
-int biomeMap[][];
-boolean waterMap[][];
-int heightMap[][];
-float humidityMap[][];
-float temperatureMap[][];
+static color map[][];
+static BaseBiome baseBiomeMap[][];
+static boolean waterMap[][];
+static int heightMap[][];
+static float humidityMap[][];
+static float temperatureMap[][];
 
 
-void settings()
+final void settings()
 {
   size(500, 500);
   noSmooth();
@@ -15,11 +15,11 @@ void settings()
 }
 
 
-void setup()
+final void setup()
 {
   
-  map = new float[width][height];
-  biomeMap = new int[width][height];
+  map = new color[width][height];
+  baseBiomeMap = new BaseBiome[width][height];
   waterMap = new boolean[width][height];
   heightMap = new int[width][height];
   humidityMap = new float[width][height];

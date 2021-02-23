@@ -5,7 +5,7 @@ int speed = 70;
 int xPos = 0;
 int yPos = 0;
 
-enum Map {heightMap, waterMap, biomeMap, temperatureMap, humidityMap};
+enum Map {heightMap, waterMap, biomeMap, temperatureMap, humidityMap, finalMap};
 Map shownMap = Map.heightMap;
 
 float fluctuation = 0;
@@ -30,53 +30,53 @@ int MAX_HEIGHT =            255;
 float TEMPERATURE_INCREMENT =   0.3f;
 int MAX_TEMPERATURE_HEIGHT   =  140;
 int DEFAULT_TEMPERATURE =       20;
+float TEMPERATURE_OFFSET =      0.02f;
 
 float HUMIDITY_TEMPERATURE =    1.3f;
 float HUMIDITY_HEIGHT =         0.2f;
+
 
 // end  of gneration parameters
 
 
 
-String biomes[] = new String[]
-{
-  "Abyss",
-  "Ocean",
-  "Shore",
-  "Plains",
-  "Hills",
-  "Mountains"
-};
-
-
-color waterMapColors[] = new color[]
+final color waterMapColors[] = new color[]
 {
   #1014DE, // blue
   #0AC621  // green
 };
 
-color biomeColors[] = new color[]
-{
-  #110155, // dark blue
-  #1014DE, // blue
-  #DADE10, // yellow
-  #0AC621, // green
-  #00520A, // dark green
-  #3E2302  // brown
-};
 
-
-// temperature = DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;
-color temperatureColor(float temperature)
+final color baseBiomeColor(BaseBiome biome)
 {
-  return round(map(temperature, 
-                    DEFAULT_TEMPERATURE - max(MAX_HEIGHT - MAX_TEMPERATURE_HEIGHT, MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT,
-                    DEFAULT_TEMPERATURE, 
-                    0, 255));
+  switch (biome)
+  {
+   case Abyss:
+     return color(#110155); // dark blue
+   case Ocean:
+     return color(#1014DE); // blue
+   case Shore:
+     return color(#FFFF5D); // yellow
+   case Plains:
+     return color(#33FF15); // green
+   case Hills:
+     return color(#00520A); // dark green
+   case Mountains:
+     return color(#3E2302); // brown
+   default:
+     return color(0);
+  }
 }
 
 
-color humidityColor(float humidity)
+// temperature = DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;
+final color temperatureColor(float temperature)
+{
+  return round(map(temperature, -10, 60, 0, 255));
+}
+
+
+final color humidityColor(float humidity)
 {
   return round(map(humidity,
                     0, MAX_HEIGHT * HUMIDITY_HEIGHT + DEFAULT_TEMPERATURE * HUMIDITY_TEMPERATURE,

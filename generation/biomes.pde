@@ -1,6 +1,6 @@
 
 
-enum BaseBiome
+static enum BaseBiome
 {
   Abyss,
   Ocean,
@@ -10,11 +10,11 @@ enum BaseBiome
   Mountains
 };
 
-static int BASE_BIOMES = 6;
+final int BASE_BIOMES = 6;
 
-HashMap<BaseBiome, String[]> BiomeVariants = new HashMap<BaseBiome, String[]>(BASE_BIOMES);
+final HashMap<BaseBiome, String[]> BiomeVariants = new HashMap<BaseBiome, String[]>(BASE_BIOMES);
 
-void initBiomes()
+final void initBiomes()
 {
   BiomeVariants.put(BaseBiome.Abyss, new String[]{
     "Abyss"});
@@ -28,4 +28,22 @@ void initBiomes()
     "Forest Hills", "Naked Hills"});
   BiomeVariants.put(BaseBiome.Mountains, new String[]{
     "Snowy Mountains", "Volcano", "Rocky Mountains"});
+}
+
+
+final color abyssMap(int x, int y)
+{
+ return #110155;
+}
+
+
+final color oceanMap(int x, int y)
+{
+ return #1014DE; 
+}
+
+
+final color shoreMap(int x, int y)
+{
+  return 0;
 }
