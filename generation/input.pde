@@ -17,11 +17,9 @@ final void keyPressed()
    case 'd':
      xPos += speed;
      break;
+     
    case 'h':
      shownMap = Map.heightMap;
-     break;
-   case 'j':
-     shownMap = Map.waterMap;
      break;
    case 'b':
      shownMap = Map.biomeMap;
@@ -50,17 +48,8 @@ final void mouseClicked()
  {
    switch (shownMap)
       {
-        case waterMap:
-          if (waterMap[mouseX][mouseY])
-            println("Land: " + heightMap[mouseX][mouseY]);
-          else
-            println("Water: " + heightMap[mouseX][mouseY]);
-          break;
         case heightMap:
           println("Height: " + heightMap[mouseX][mouseY]);
-          break;
-        case biomeMap:
-          println("Biome: " + baseBiomeMap[mouseX][mouseY]);
           break;
         case temperatureMap:
           println("Temperature: " + temperatureMap[mouseX][mouseY]);
@@ -98,10 +87,6 @@ final void mouseWheel(MouseEvent event)
           if (MAX_FLUCTUATION < 0)
             MAX_FLUCTUATION = 0;
           println("Max fluctuation: " + MAX_FLUCTUATION);
-          break;
-        case 'l':
-          WATER_THRESHOLD += round(value);
-          println("Water threshold: " + WATER_THRESHOLD);
           break;
          
         default:

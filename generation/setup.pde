@@ -1,7 +1,6 @@
 
 static color map[][];
-static BaseBiome baseBiomeMap[][];
-static boolean waterMap[][];
+static Biome biomeMap[][];
 static int heightMap[][];
 static float humidityMap[][];
 static float temperatureMap[][];
@@ -19,13 +18,10 @@ final void setup()
 {
   
   map = new color[width][height];
-  baseBiomeMap = new BaseBiome[width][height];
-  waterMap = new boolean[width][height];
+  biomeMap = new Biome[width][height];
   heightMap = new int[width][height];
   humidityMap = new float[width][height];
   temperatureMap = new float[width][height];
-  
-  initBiomes();
-  
+    
   generateWorld();
 }
