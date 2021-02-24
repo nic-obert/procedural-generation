@@ -33,7 +33,10 @@ int DEFAULT_TEMPERATURE =       20;
 float TEMPERATURE_FLUCTUATION = 0.001f;
 
 float HUMIDITY_TEMPERATURE =    1.3f;
+float HUMIDITY_HIGH_TEMP =      23f;
+float HUMIDITY_LOW_TEMP =       2f;
 float HUMIDITY_HEIGHT =         0.2f;
+float HUMIDITY_SCALE =          0.003f;
 
 
 // end  of gneration parameters

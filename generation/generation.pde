@@ -10,7 +10,7 @@ final void draw()
 final void generateWorld()
 {
   generateHeight();
-  generateHumidity();
+  //generateHumidity(); // commented out for optimization
   divideBaseBiomes();
   divideBiomes();
 }
@@ -145,10 +145,34 @@ final void generateHumidity()
   {
     for (int y = 0; y != height; y++)
     {
-      float humidityNoise = noise((x + xPos) * scale, (y + yPos) * scale);
-      humidityMap[x][y] = humidityNoise + temperatureMap[x][y] * HUMIDITY_TEMPERATURE;
+      float humidityNoise = noise((x + xPos) * HUMIDITY_SCALE, (y + yPos) * HUMIDITY_SCALE) * 100 - 50;
+      float temp = temperatureMap[x][y];
+      if (temp > HUMIDITY_HIGH_TEMP)
+      {
+        temp -= temp - HUMIDITY_HIGH_TEMP;
+      }
+      else if (temp < HUMIDITY_LOW_TEMP)
+      {
+        temp += HUMIDITY_LOW_TEMP - temp;
+      }
+      humidityMap[x][y] = humidityNoise + temp * HUMIDITY_TEMPERATURE;
     }
   }
+}
+
+
+final float calculateHumidity(int x, int y, float temp)
+{
+  float humidityNoise = noise(x * HUMIDITY_SCALE, y * HUMIDITY_SCALE) * 100 - 50;
+  if (temp > HUMIDITY_HIGH_TEMP)
+  {
+    temp -= temp - HUMIDITY_HIGH_TEMP;
+  }
+  else if (temp < HUMIDITY_LOW_TEMP)
+  {
+    temp += HUMIDITY_LOW_TEMP - temp;
+  }
+  return humidityNoise + temp * HUMIDITY_TEMPERATURE;
 }
 
 
@@ -165,10 +189,13 @@ final void generateHeight()
       int h = round(map(value, 0f, 1f, 0, MAX_HEIGHT));
       heightMap[x][y] = h;
       
-      temperatureMap[x][y] = calculateTemperature(x + xPos, y + yPos, h);
-      
       waterMap[x][y] = h > WATER_THRESHOLD;
-            
+      
+      float temp = calculateTemperature(x + xPos, y + yPos, h);
+      
+      temperatureMap[x][y] = temp;
+      humidityMap[x][y] = calculateHumidity(x + xPos, y + yPos, temp);
+      
     }
   }
   
