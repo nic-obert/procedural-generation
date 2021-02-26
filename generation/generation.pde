@@ -11,7 +11,7 @@ final void generateWorld()
 {
   generateHeight();
   //generateHumidity(); // commented out for optimization
-
+  
 }
 
 
@@ -36,9 +36,13 @@ final void drawMap()
         case humidityMap:
           col = humidityColor(humidityMap[x][y]);
           break;
+          
+        case biomeMap:
+          col = biomeMap[x][y].col;
+          break;
          
         default:
-          col = 0;
+          col = #E513C3;
       }
       
       stroke(col);
@@ -99,9 +103,12 @@ final void generateHeight()
       heightMap[x][y] = h;
             
       float temp = calculateTemperature(x + xPos, y + yPos, h);
+      float humidity = calculateHumidity(x + xPos, y + yPos, temp);
       
       temperatureMap[x][y] = temp;
-      humidityMap[x][y] = calculateHumidity(x + xPos, y + yPos, temp);
+      humidityMap[x][y] = humidity;
+      
+      biomeMap[x][y] = calculateBiome(h, temp, humidity);
       
     }
   }

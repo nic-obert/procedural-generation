@@ -57,6 +57,9 @@ final void mouseClicked()
         case humidityMap:
           println("Humidity: " + humidityMap[mouseX][mouseY]);
           break;
+        case biomeMap:
+          println("Biome: " + biomeMap[mouseX][mouseY].name + "\tHeight: " + heightMap[mouseX][mouseY] + "\tTemperature: " + temperatureMap[mouseX][mouseY] + "\tHumidity: " + humidityMap[mouseX][mouseY]);
+          break;
           
         default:
           return;
