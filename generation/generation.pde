@@ -1,6 +1,5 @@
 
 
-
 final void draw()
 {
   drawMap(); //<>// //<>//
@@ -13,7 +12,6 @@ final void generateWorld()
   //generateHumidity(); // commented out for optimization
   
 }
-
 
 
 final void drawMap() 
@@ -77,14 +75,12 @@ final void generateHumidity()
 final float calculateHumidity(int x, int y, float temp)
 {
   float humidityNoise = noise(x * HUMIDITY_SCALE, y * HUMIDITY_SCALE) * 100 - 50;
+
   if (temp > HUMIDITY_HIGH_TEMP)
-  {
     temp -= temp - HUMIDITY_HIGH_TEMP;
-  }
   else if (temp < HUMIDITY_LOW_TEMP)
-  {
     temp += HUMIDITY_LOW_TEMP - temp;
-  }
+  
   return humidityNoise + temp * HUMIDITY_TEMPERATURE;
 }
 
@@ -116,7 +112,6 @@ final void generateHeight()
 }
 
 
-
 final float calculateTemperature(int x, int y, int h)
 {
   float tempNoise = noise(x * TEMPERATURE_SCALE, y * TEMPERATURE_SCALE) * 100 - 50;
@@ -124,3 +119,4 @@ final float calculateTemperature(int x, int y, int h)
   return DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT + tempNoise;
   
 }
+

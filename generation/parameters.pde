@@ -31,8 +31,7 @@ float HUMIDITY_HEIGHT =         0.2f;
 float HUMIDITY_SCALE =          0.003f;
 
 
-// end  of gneration parameters
-
+// end  of generation parameters
 
 
 // temperature = DEFAULT_TEMPERATURE - abs(h - MAX_TEMPERATURE_HEIGHT) * TEMPERATURE_INCREMENT;

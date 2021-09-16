@@ -47,8 +47,8 @@ class Biome
 final Biome[] biomes = new Biome[]
 {
   //          name                  height                  temperature                                    humidity                                    color
-  new Biome("Abyss",          new Range(0, 39),           new Range(-10, 50),                             new Range(-10, Float.MAX_VALUE),            #090140),
-  new Biome("Ocean",          new Range(40, 129),         new Range(-10, 50),                             new Range(-10, Float.MAX_VALUE),             #2107D8),
+  new Biome("Abyss",          new Range(0, 39),           new Range(-10, 50),                           new Range(-10, Float.MAX_VALUE),              #090140),
+  new Biome("Ocean",          new Range(40, 129),         new Range(-10, 50),                           new Range(-10, Float.MAX_VALUE),              #2107D8),
   new Biome("IceLands",       new Range(0, 170),          new Range(-Float.MAX_VALUE, 0),               new Range(-Float.MAX_VALUE, Float.MAX_VALUE), #75FCF2),
   new Biome("Shore",          new Range(130, 135),        new Range(0, 50),                             new Range(-Float.MAX_VALUE, 50),              #C7CE00),
   new Biome("SnowyShore",     new Range(130, 135),        new Range(-Float.MAX_VALUE, 0),               new Range(-Float.MAX_VALUE, Float.MAX_VALUE), #EDFCA8),
