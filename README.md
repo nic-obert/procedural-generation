@@ -1,4 +1,4 @@
-# procedural-generation
+# **Procedural Generation**
 
 A conceptual project to learn about procedural world generation.
 Generation is based on a few parameters such as:
